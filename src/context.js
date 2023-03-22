@@ -7,25 +7,38 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [cocktail, setCocktail] = useState([]);
   const [searchTerm, setSearchTerm] = useState("a");
+  const [loading, toggleLoading] = useState(false);
 
   const fetchData = useCallback(async () => {
-    const response = await fetch(`${url}${searchTerm}`);
-    const data = await response.json();
+    toggleLoading(true);
 
-    const { drinks } = data;
-    const newCotails = drinks.map((item) => {
-      const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } = item;
+    try {
+      const response = await fetch(`${url}${searchTerm}`);
+      const data = await response.json();
+      const { drinks } = data;
 
-      return {
-        id: idDrink,
-        name: strDrink,
-        image: strDrinkThumb,
-        info: strAlcoholic,
-        glass: strGlass,
-      };
-    });
+      if (drinks) {
+        const newCotails = drinks.map((item) => {
+          const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } =
+            item;
 
-    setCocktail(newCotails);
+          return {
+            id: idDrink,
+            name: strDrink,
+            image: strDrinkThumb,
+            info: strAlcoholic,
+            glass: strGlass,
+          };
+        });
+        setCocktail(newCotails);
+      } else {
+        setCocktail([]);
+      }
+      toggleLoading(false);
+    } catch (error) {
+      console.log(error);
+      toggleLoading(false);
+    }
   }, [searchTerm]);
 
   useEffect(() => {
@@ -33,7 +46,9 @@ const AppProvider = ({ children }) => {
   }, [searchTerm, fetchData]);
 
   return (
-    <AppContext.Provider value={{ cocktail, setSearchTerm }}>
+    <AppContext.Provider
+      value={{ cocktail, setSearchTerm, searchTerm, loading }}
+    >
       {children}
     </AppContext.Provider>
   );

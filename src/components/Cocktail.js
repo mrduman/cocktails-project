@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context";
 
-const Cocktail = ({ name, image, glass, info }) => {
+const Cocktail = ({ name, image, glass, info, id }) => {
   return (
     <article className="cocktail">
       <div className="img-container">
@@ -12,9 +12,9 @@ const Cocktail = ({ name, image, glass, info }) => {
         <h3>{name}</h3>
         <h4>{glass}</h4>
         <p>{info}</p>
-        {/* <Link to={`/cocktail/${id}`} className="btn btn-primary btn-details">
+        <Link to={`/cocktail/${id}`} className="btn btn-primary btn-details">
           details
-        </Link> */}
+        </Link>
       </div>
     </article>
   );

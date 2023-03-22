@@ -5,11 +5,11 @@ import logo from "../logo.svg";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <div class="nav-center">
+      <div className="nav-center">
         <Link to="/">
           <img src={logo} alt="cocktail db logo" className="logo" />
         </Link>
-        <div class="nav-links">
+        <div className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
         </div>

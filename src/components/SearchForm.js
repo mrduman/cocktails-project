@@ -11,7 +11,7 @@ const SearchForm = () => {
     searchValue.current.focus();
   }, []);
 
-  const searchCocktail = (e) => {
+  const searchCocktail = () => {
     setSearchTerm(searchValue.current.value);
   };
 
@@ -21,11 +21,12 @@ const SearchForm = () => {
   return (
     <section className="section search">
       <form className="search-form" onSubmit={handleSubmit}>
-        <div class="form-control">
-          <label for="name">search your favorite cocktail</label>
+        <div className="form-control">
+          <label htmlFor="name">search your favorite cocktail</label>
           <input
             type="text"
             name="name"
+            id="name"
             ref={searchValue}
             onChange={searchCocktail}
           />
